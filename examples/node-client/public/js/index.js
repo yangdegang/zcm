@@ -7,10 +7,11 @@ function handle(channel, msg) {
 var subscriptions = [];
 
 function subscribe() {
-    console.log('Subscribing to FOOBAR_SERVER');
-    subscriptions.push({channel: 'FOOBAR_SERVER',
-                        subscription: z.subscribe('FOOBAR_SERVER', 'example_t', handle)});
-    return true;
+    console.log('Subscribing to EXAMPLE');
+    var sub = z.subscribe('EXAMPLE', 'example_t', handle);
+    subscriptions.push({channel: 'EXAMPLE',
+                        subscription: sub});
+    return false;
 }
 
 function unsubscribe() {
@@ -19,14 +20,14 @@ function unsubscribe() {
     var sub = subscriptions.pop();
     console.log('Unsubscribing from ' + sub.channel);
     z.unsubscribe(sub.subscription);
-    return true;
+    return false;
 }
 
 function subscribe_all() {
     console.log('Subscribing to .*');
     subscriptions.push({channel: ".*",
                         subscription: z.subscribe_all(handle)});
-    return true;
+    return false;
 }
 
 function publish() {
