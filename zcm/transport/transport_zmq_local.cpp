@@ -70,6 +70,8 @@ struct ZCM_TRANS_CLASSNAME : public zcm_trans_t
 
             rc = zmq_unbind(it->second, address.c_str());
             if (rc == -1) {
+                // XXX: unbind always fails on inproc transports, seems to be a
+                //      problem with zmq
                 ZCM_DEBUG("failed to unbind pubsock: %s", zmq_strerror(errno));
             }
 
@@ -149,6 +151,9 @@ struct ZCM_TRANS_CLASSNAME : public zcm_trans_t
             ZCM_DEBUG("failed to bind pubsock: %s", zmq_strerror(errno));
             return nullptr;
         }
+        // TODO: bind takes a long time for whatever reason, might be able to use zmq_poll
+        //       http://api.zeromq.org/3-2:zmq-poll to determine when the socket is ready to
+        //       send it's first message
         pubsocks.emplace(channel, sock);
         return sock;
     }

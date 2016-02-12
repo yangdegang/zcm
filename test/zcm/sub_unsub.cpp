@@ -89,8 +89,9 @@ int main(int argc, const char *argv[])
 
     Handler handler;
 
-    string transports[2] = {"ipc", "inproc"};
-    for (size_t i = 0; i < 2; ++i) {
+    //string transports[2] = {"ipc", "inproc"};
+    string transports[1] = {"ipc"};
+    for (size_t i = 0; i < 1; ++i) {
         zcm::ZCM zcm(transports[i]);
         vprintf("Creating zcm %s\n", transports[i].c_str());
         if (!zcm.good()) {
